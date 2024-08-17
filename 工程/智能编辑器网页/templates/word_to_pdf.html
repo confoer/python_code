@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件格式转换</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='wtp_styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>上传Word(.docx)并将文件以PDF导出</h1>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <form action="{{ url_for('wtp_page') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".docx" class="file-input">
+            <button type="submit" class="submit-btn">开始转换</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件格式转换</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='format_conversion_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="title">文件格式转换</h2>
+        <div class="buttons">
+            <button class="convert-btn word-to-pdf" onclick="navigateToPage('/word_to_pdf')">
+                <i class="fas fa-file-word"></i>
+                WORD转PDF
+            </button> 
+            <button class="convert-btn excel-to-pdf" onclick="navigateToPage('/excel_to_pdf')">
+                <i class="fas fa-file-excel"></i>
+                EXCEL转PDF
+            </button>
+            <button class="convert-btn pdf-to-word" onclick="navigateToPage('/pdf_to_word')">
+                <i class="fas fa-file-pdf"></i>
+                PDF转WORD
+            </button>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateToPage(url) {
+        window.location = url;}
+</script>
+</html>

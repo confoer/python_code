@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相关功能</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Functionality_style.css') }}">
+</head>
+
+<body>
+    <div class="function-container">
+        <h2>相关功能</h2>
+        <div class="function-list">
+            <div class="function-item">
+                <p>文档格式转换</p>
+                <button class="function-button" onclick="navigateToPage('/format_conversion')">START →</button>
+            </div>
+            <div class="function-item">
+                <p>图片识别</p>
+                <button class="function-button" onclick="navigateToPage('/image_ocr_page')">START →</button>
+            </div>
+            <div class="function-item" onclick="navigateToPage('/ai_answer')">
+                <p>AI问答</p>
+                <button class="function-button">START →</button>
+            </div>
+            <div class="function-item" onclick="navigateToPage('/data_visualization')">
+                <p>数据可视化</p>
+                <button class="function-button">START →</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateToPage(url) {
+        window.location = url;
+    }
+</script>
+</html>

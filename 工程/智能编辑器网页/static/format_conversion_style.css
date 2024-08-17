@@ -1,0 +1,71 @@
+/* 基本重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面整体样式 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    /* 浅灰色背景 */
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    /* 限制容器宽度 */
+    margin: 20px;
+    /* 容器外边距 */
+}
+
+.title {
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    /* 文字阴影效果 */
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    /* 垂直排列按钮 */
+    align-items: center;
+}
+
+.convert-btn {
+    margin: 10px 0;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pdf-to-word {
+    background-color: #4CAF50;
+}
+
+.word-to-pdf {
+    background-color: #2196F3;
+}
+
+.excel-to-pdf {
+    background-color: #FFC107;
+}
+
+.convert-btn:hover {
+    opacity: 0.8;
+}
