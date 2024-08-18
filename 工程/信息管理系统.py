@@ -1,7 +1,7 @@
 import sqlite3
 
-class text_sys():
-    def init():
+class text_sys:
+    def __init__(self):   
         conn = sqlite3.connect('student_text.db') 
         sql = """
         create table students(
@@ -51,8 +51,14 @@ class text_sys():
         yb.close()
         conn.close()
     
-    def add_list_column(name):
+    def add_list_column(name,type):
         conn = sqlite3.connect('student_text.db')
+        sql = """ALTER TABLE students ADD ? ?;"""
+        yb =conn.cursor()
+        yb.execute(sql,(name,type))
+        conn.commit()
+        yb.close()
+        conn.close()
         
 if __name__ =="__main__":
     y=1
