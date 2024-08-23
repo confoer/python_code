@@ -53,12 +53,24 @@ class text_sys:
     
     def add_list_column(name,type):
         conn = sqlite3.connect('student_text.db')
-        sql = """ALTER TABLE students ADD ? ?;"""
+        sql = "ALTER TABLE students ADD {} {};".format(name,type)
         yb =conn.cursor()
-        yb.execute(sql,(name,type))
+        yb.execute(sql)
         conn.commit()
         yb.close()
         conn.close()
+    
+    def delete_list_column(name):
+        conn = sqlite3.connect('student_text.db')
+        sql = "ALTER TABLE students DROP COLUMN {};".format(name)
+        yb = conn.cursor()
+        yb.execute(sql)
+        conn.commit()
+        yb.close()
+        conn.close()
+
+    def export_form():
+        
         
 if __name__ =="__main__":
     y=1
@@ -79,6 +91,11 @@ if __name__ =="__main__":
             if a == 1:
                 b = input("请输入列名:")
                 ts.add_list_column(b)
+            elif a==2:
+                b = input("请输入列名:")
+                ts.delete_list_column(b)
+            else:
+                print("输入错误")
         z = input("是否继续?y/n")
         if(z =='y' or z == 'Y'):
             y=1
