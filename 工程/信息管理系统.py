@@ -1,5 +1,5 @@
 import sqlite3
-
+from openpyxl import Workbook
 class text_sys:
     def __init__(self):   
         conn = sqlite3.connect('student_text.db') 
@@ -70,8 +70,15 @@ class text_sys:
         conn.close()
 
     def export_form():
-        
-        
+        conn = sqlite3.connect('student_text.db')
+        cursor = conn.execute("SELECT * FROM student")
+        workbook = Workbook()
+        sheet = workbook.active
+        for row_index, row_data in enumerate(cursor):
+            for column_index, column_data in enumerate(row_data):
+                sheet.cell(row=row_index+1, column=column_index+1, value=column_data)
+        workbook.save(filename='student.xlsx')
+
 if __name__ =="__main__":
     y=1
     ts = text_sys()
@@ -96,6 +103,8 @@ if __name__ =="__main__":
                 ts.delete_list_column(b)
             else:
                 print("输入错误")
+        elif x==5:
+            ts.export_form()
         z = input("是否继续?y/n")
         if(z =='y' or z == 'Y'):
             y=1
