@@ -3,7 +3,7 @@ import pyautogui as pg
 class BatchRename():
 
     def __init__(self):
-        x=pg.prompt(text="路径:",title="请输入图片路径",default="")#明文输入框
+        x=pg.prompt(text="路径:",title="请输入图片文件夹路径",default="")#明文输入框
         self.path = x  # 图片的路径
 
     def rename(self):

@@ -1,22 +1,25 @@
 import sqlite3
 from openpyxl import Workbook
+
 class text_sys:
-    def __init__(self):   
-        conn = sqlite3.connect('student_text.db') 
-        sql = """
-        create table students(
-        id int primary key,
-        name varchar,
-        age int,
-        sex varchar);
-        """
-        yb = conn.cursor()
-        yb.execute(sql)
-        conn.commit()
+    def __init__(self):  
+        conn = sqlite3.connect('student_text.db')
+        yb = conn.cursor() 
+        yb.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='students';")
+        if yb.fetchone() is None:
+            sql = """
+            create table students(
+            id int primary key,
+            name varchar,
+            age int,
+            sex varchar);
+            """
+            yb.execute(sql)
+            conn.commit()
         yb.close()
         conn.close()
     
-    def add_student():
+    def add_student(self):
         conn = sqlite3.connect('student_text.db') 
         stu = input("id,姓名，年龄，性别")
         values = stu.split()
@@ -77,14 +80,18 @@ class text_sys:
         for row_index, row_data in enumerate(cursor):
             for column_index, column_data in enumerate(row_data):
                 sheet.cell(row=row_index+1, column=column_index+1, value=column_data)
-        workbook.save(filename='student.xlsx')
+        save_filename = input('请输入保存路径:')
+        workbook.save(filename=save_filename+'student.xlsx')
+        conn.commit()
+        conn.close()
 
 if __name__ =="__main__":
     y=1
     ts = text_sys()
     while(y):
         print("选择模式")
-        x = input("1.添加学生信息\n2.清除学生信息\n3.清除所有信息\n4.修改表格\n5.导出表格")
+        k = input("1.添加学生信息\n2.清除学生信息\n3.清除所有信息\n4.修改表格\n5.导出表格\n")
+        x = int(k)
         if x==1:
             ts.add_student()
         elif x==2:
@@ -105,8 +112,11 @@ if __name__ =="__main__":
                 print("输入错误")
         elif x==5:
             ts.export_form()
+        else :
+            print("输入错误")
+            break
         z = input("是否继续?y/n")
         if(z =='y' or z == 'Y'):
-            y=1
+            continue
         else:
-            y=0
+            break
