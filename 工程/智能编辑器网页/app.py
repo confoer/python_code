@@ -19,8 +19,8 @@ erniebot.api_type = 'aistudio'
 erniebot.access_token = 'c45a630b4d316eae8d412079a5c73685927aedba' 
 app.secret_key = 'secret'  
 app.config['SECRET_KEY'] = 'secret'  
-UPLOAD_FOLDER = 'uploads/'  
-DOWNLOAD_FOLDER = 'downloads/'  
+UPLOAD_FOLDER = './uploads/'  
+DOWNLOAD_FOLDER = './downloads/'  
 app.config['ALLOWED_EXTENSIONS'] = ['png','jpg', 'jpeg']
 
 
@@ -91,7 +91,6 @@ def ai_answer():
 
 @app.route('/getRigistRequest')
 def getRigistRequest():
-    
     db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="flask",charset="utf8") 
     cursor = db.cursor()
     username=request.args.get('user')
