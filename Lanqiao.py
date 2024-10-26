@@ -20,3 +20,8 @@
 #     i-=1
 # 倒序输出
 # print(n[::-1])
+
+t = int(input())
+arr = []
+for i in range(t):
+    arr+=[list(map(int,input().split()))]

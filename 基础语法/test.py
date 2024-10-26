@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 pg.init()
 ui=pg.display.set_mode((1520,600))
@@ -16,8 +17,6 @@ ui.blit(text,(100,100))
 #             exit()
 #     pg.display.flip()
 
-
-import random
 l = [2,4,5,6,7,8]
 x=random.choice(l)# 从列表中随机抽取
 print(x)
