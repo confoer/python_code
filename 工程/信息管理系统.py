@@ -21,7 +21,7 @@ class text_sys:
     
     def add_student(self):
         conn = sqlite3.connect('student_text.db') 
-        stu = input("id,姓名，年龄，性别")
+        stu = input("id,姓名，年龄，性别\n")
         values = stu.split()
         id = values[0]
         name = values[1]
