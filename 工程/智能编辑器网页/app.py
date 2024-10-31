@@ -23,7 +23,6 @@ UPLOAD_FOLDER = './uploads/'
 DOWNLOAD_FOLDER = './downloads/'  
 app.config['ALLOWED_EXTENSIONS'] = ['png','jpg', 'jpeg']
 
-
 if not os.path.exists(UPLOAD_FOLDER):  
     os.makedirs(UPLOAD_FOLDER)  
 if not os.path.exists(DOWNLOAD_FOLDER):  
@@ -218,8 +217,8 @@ def wordcloud_docx():
             docx_path = os.path.join(UPLOAD_FOLDER, filename)  
             file.save(docx_path)  
             txt_filename = os.path.splitext(filename)[0] + '.txt'  
-            txt_path = os.path.join(UPLOAD_FOLDER, txt_filename)  
-
+            txt_path = os.path.join(UPLOAD_FOLDER, txt_filename)
+  
             try:  
                 save_docx_as_txt(docx_path, txt_path)  
                 with open(txt_path, 'r', encoding='utf-8') as txt_file:  
