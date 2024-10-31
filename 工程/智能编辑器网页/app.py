@@ -91,15 +91,15 @@ def ai_answer():
 
 @app.route('/getRigistRequest')
 def getRigistRequest():
-    db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="flask",charset="utf8") 
+    db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="user_data",charset="utf8") 
     cursor = db.cursor()
-    username=request.args.get('user')
-    password1=request.args.get('password')
-    password2=request.args.get('password')
+    username=request.args.get('User_Name')
+    password1=request.args.get('User_Password')
+    password2=request.args.get('User_Password')
     print(password1)
     print(password2)
     if password1==password2:
-        sql = "INSERT INTO flask.user(user,password) VALUES (%s ,%s)"
+        sql = "INSERT INTO user_data.user(User_Name,User_Password) VALUES (%s ,%s)"
         try:
             cursor.execute(sql,(username,password1))
             db.commit()
@@ -138,11 +138,11 @@ def pdf_to_word():
 
 @app.route('/login',methods=['GET','POST'])
 def getLoginRequest():
-    db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="flask", charset="utf8")
+    db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="user_data", charset="utf8")
     cursor = db.cursor()
-    username = request.args.get('username')
-    password = request.args.get('password')
-    sql = "SELECT * FROM flask.user WHERE user=%s AND password=%s"
+    username = request.args.get('User_Name')
+    password = request.args.get('User_Password')
+    sql = "SELECT * FROM user_data.user_data WHERE User_Name=%s AND User_Password=%s"
     try:
         cursor.execute(sql, (username, password))
         results = cursor.fetchall()
@@ -151,11 +151,12 @@ def getLoginRequest():
             return render_template('Functionality.html')  
         else:
             db.close()
-            return '用户名或密码不正确'
+            return '用户名或密码不正确',401
     except:
         traceback.print_exc()
         db.rollback()  
         db.close() 
+        return jsonify({"error": "内部服务器错误"}), 500
 
 @app.route('/image_ocr_page', methods=['GET'])
 def index():
