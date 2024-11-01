@@ -1,0 +1,5 @@
+{
+  "done_flag": false,
+  "err_type": "<class 'paddlex.utils.errors.others.CalledProcessError'>",
+  "err_msg": "Command ['\/usr\/bin\/python', 'tools\/export_model.py', '-c', '\/root\/.paddlex\/tmph_c2aopz\/textdetmodel_PP-OCRv4_mobile_det.yml'] returned non-zero exit status 1."
+}
