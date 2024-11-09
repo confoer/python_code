@@ -18,8 +18,8 @@ erniebot.api_type = 'aistudio'
 erniebot.access_token = 'c45a630b4d316eae8d412079a5c73685927aedba' 
 app.secret_key = 'secret'  
 app.config['SECRET_KEY'] = 'secret'  
-UPLOAD_FOLDER = './uploads/'  
-DOWNLOAD_FOLDER = './downloads/'  
+UPLOAD_FOLDER = '../Smart_Editor_Web/uploads/'  
+DOWNLOAD_FOLDER = '../Smart_Editor_Web/downloads'  
 app.config['ALLOWED_EXTENSIONS'] = ['png','jpg', 'jpeg']
 
 ##检查是否存在文件夹
@@ -109,7 +109,7 @@ def Functionality():
 def format_conversion():  
     return render_template('format_conversion.html')
 
-## WORD转PDF
+# WORD转PDF
 def allowed_file(filename):  
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['docx','doc']
 
@@ -143,7 +143,7 @@ def wtp_page():
         flash('Invalid file type. Only .docx files are allowed.')  
         return redirect('word_to_pdf')
 
-## PDF转WORD
+# PDF转WORD
 def convert_pdf_to_docx(pdf_path, docx_path):  
     cv = Converter(pdf_path)  
     cv.convert(docx_path, start=0, end=None)  
@@ -217,7 +217,7 @@ def etp_page():
     return render_template('excel_to_pdf.html')
 
 
-# 图片识别界面
+## 图片识别界面
 def allowed_file_image(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -251,7 +251,7 @@ def image_ocr():
     except Exception as e:  
         return jsonify({'error': str(e)}), 500 
 
-# AI问答界面
+## AI问答界面
 @app.route('/ai_answer',methods=['GET','POST'])
 def ai_answer():
     return render_template('ai_answer.html')
@@ -330,6 +330,12 @@ def wordcloud_docx():
 @app.route('/download_wordcloud/<filename>')  
 def download_wordcloud(filename):  
     return send_from_directory(DOWNLOAD_FOLDER, filename)
+
+## 信息抽取
+# @app.route('/Information_Extraction',methods = ['GET','POST'])
+# def Information_Extraction(filename):
+
+#     return 
 
 # 程序运行处
 if __name__ == '__main__':
