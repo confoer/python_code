@@ -14,8 +14,6 @@ import os,sys
 
 ## 初始化
 app = Flask(__name__)
-erniebot.api_type = 'aistudio'  
-erniebot.access_token = 'c45a630b4d316eae8d412079a5c73685927aedba' 
 app.secret_key = 'secret'  
 app.config['SECRET_KEY'] = 'secret'  
 UPLOAD_FOLDER = '../Smart_Editor_Web/uploads/'  
@@ -260,10 +258,10 @@ def ai_answer():
 def ai_answer_func():    
     data = request.form.get('data', 'No data provided')  
     erniebot.api_type = 'aistudio'  
-    erniebot.access_token = 'c45a630b4d316eae8d412079a5c73685927aedba'  
+    erniebot.access_token = 'a4d71e34d9ac361ac4c999c2656e0fd8cf44f4fc'  
     try:   
         response = erniebot.ChatCompletion.create(  
-            model='ernie-turbo',  
+            model='ernie-lite',  
             messages=[{'role': 'user', 'content': data}]  
         )          
         result = response.get_result() 
@@ -331,11 +329,75 @@ def wordcloud_docx():
 def download_wordcloud(filename):  
     return send_from_directory(DOWNLOAD_FOLDER, filename)
 
-## 信息抽取
-# @app.route('/Information_Extraction',methods = ['GET','POST'])
-# def Information_Extraction(filename):
 
-#     return 
+## 信息抽取
+@app.route('/Information_Extraction_ui',methods=['GET','POST'])
+def Information_Extraction_ui():
+    return render_template('Information_Extraction.html')
+
+@app.route('/Upload_data',methods=['GET','POST'])
+def Upload_data():
+    if 'file' not in request.files:  
+        flash('No file part')  
+        return '<script> alert("文件路径错误");</script>'   
+    file = request.files['file']  
+    if file.filename == '':  
+        flash('No selected file')  
+        return '<script> alert("没有选择文件");</script>'   
+    if file and allowed_file(file.filename):  
+        filename = file.filename # 获取文件名  
+        filepath = os.path.join(UPLOAD_FOLDER, filename)  # 文件路径
+        file.save(filepath)  
+
+@app.route('/Information_Extraction',methods = ['POST'])
+def process_action():
+    data = request.get_json()
+    action = data.get('action')
+    if action == 'Communication_Extract':
+        result = 1 
+    elif action == 'Relationship_Extraction':
+        result = 2
+    elif action == 'Event_Extraction':
+        result = 3
+    elif action == 'Viewpoint_Extraction':
+        result = 4
+    elif action == 'Emotional_Classification':
+        result = 5 
+    else:
+        result = 'Unknown action'   
+    return jsonify({'result': result})
+
+@app.route('/upload_data', methods=['POST'])
+def upload_data():
+    # 获取表单数据
+    # 假设你有一个文件字段 'file' 和一个文本字段 'text'
+    file = request.files.get('file')
+    text = request.form.get('text')
+    
+    # 处理上传的文件和表单数据
+    # 这里只是一个示例，你需要根据实际的需求来编写业务逻辑
+    result = process_file_and_text(file, text)
+    
+    # 返回 JSON 响应
+    return jsonify({'result': result})
+
+
+def process_file_and_text(file, text):
+    # 这里是处理上传文件和文本的逻辑
+    # 例如，保存文件，处理文本等
+    return 'File and text processed successfully' 
+#         pdf_filename = os.path.splitext(filename)[0] + '.pdf' # 保存名
+#         pdf_filepath = os.path.join(DOWNLOAD_FOLDER, pdf_filename)  # 保存路径
+#         try:  
+#             convert(filepath, pdf_filepath)  
+#             return redirect('format_conversion') 
+#         except Exception as e:  
+#             flash(f'Error converting file: {e}')  
+#             return '<script> alert("转换失败");</script>' 
+#     else:  
+#         flash('Invalid file type. Only .docx files are allowed.')  
+#         return redirect('Information_Extraction')
+
 
 # 程序运行处
 if __name__ == '__main__':

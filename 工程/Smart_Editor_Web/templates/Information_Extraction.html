@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>信息提取</title>
-    <link rel="stylesheet" href="{{url_for('static',filename = 'Information_Extraction_style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='Information_Extraction_style.css')}}">
 </head>
+
 <body>
-    
+    <div class="upload-container">
+        <h2>上传文件（.docx）</h2>
+        <form id = "upload_form" action="/Upload_data" method="post" enctype="multipart/form-data">
+            <label for="file" class="file-label">选择文件:</label>
+            <input type="file" id="file" name="file" class="file-input"><br><br>
+            <input type="submit" value="上传文件" class="submit-button">
+        </form>
+    </div>
+    <div class="button-container">
+        <button class="action-button" id="Communication_Extract">信息提取</button>
+        <button class="action-button" id="Relationship_Extraction">关系提取</button>
+        <button class="action-button" id="Event_Extraction">事件提取</button>
+        <button class="action-button" id="Viewpoint_Extraction">观点提取</button>
+        <button class="action-button" id="Emotional_Classification">情感分类</button>
+    </div>
+    <div class="result-container">
+        <h3>处理结果:</h3>
+        <textarea id="result" class="result-textarea" readonly></textarea>
+    </div>
+    <script src="{{ url_for('static', filename='Information_Extraction_script.js') }}"></script>
 </body>
 </html>
