@@ -25,15 +25,23 @@ document.addEventListener('DOMContentLoaded', function ()
     });
 });
 
-document.getElementById('upload-form').addEventListener('submit', function (e)
-{
-    e.preventDefault();
-    var formData = new FormData(this);
-    fetch('/upload_data',{
+function handleFormSubmit(event) {
+    event.preventDefault();
+    var formData = new FormData(document.getElementById('upload-form'));
+
+    fetch('/Upload_data', {
         method: 'POST',
         body: formData
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+            throw new Error('Network response was not ok.');
         })
-        .then(response => response.json())
-        .then(data => {document.getElementById('result').value = data.result;})
+        .then(data => {
+            console.log(data);
+            alert(data);
+        })
         .catch(error => console.error('Error:', error));
-});
+}

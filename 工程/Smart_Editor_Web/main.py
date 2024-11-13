@@ -5,6 +5,8 @@ from pdf2docx import Converter
 from docx2pdf import convert
 from werkzeug.utils import secure_filename
 from paddleocr import PaddleOCR,draw_ocr
+from pprint import pprint
+from paddlenlp import Taskflow
 import pandas as pd
 import traceback,pdfkit
 import erniebot
@@ -347,10 +349,10 @@ def Upload_data():
     if file and allowed_file(file.filename):  
         filename = file.filename # 获取文件名  
         filepath = os.path.join(UPLOAD_FOLDER, filename)  # 文件路径
-        file.save(filepath)  
+        file.save(filepath)
 
 @app.route('/Information_Extraction',methods = ['POST'])
-def process_action():
+def Information_Extraction():
     data = request.get_json()
     action = data.get('action')
     if action == 'Communication_Extract':
@@ -367,36 +369,6 @@ def process_action():
         result = 'Unknown action'   
     return jsonify({'result': result})
 
-@app.route('/upload_data', methods=['POST'])
-def upload_data():
-    # 获取表单数据
-    # 假设你有一个文件字段 'file' 和一个文本字段 'text'
-    file = request.files.get('file')
-    text = request.form.get('text')
-    
-    # 处理上传的文件和表单数据
-    # 这里只是一个示例，你需要根据实际的需求来编写业务逻辑
-    result = process_file_and_text(file, text)
-    
-    # 返回 JSON 响应
-    return jsonify({'result': result})
-
-
-def process_file_and_text(file, text):
-    # 这里是处理上传文件和文本的逻辑
-    # 例如，保存文件，处理文本等
-    return 'File and text processed successfully' 
-#         pdf_filename = os.path.splitext(filename)[0] + '.pdf' # 保存名
-#         pdf_filepath = os.path.join(DOWNLOAD_FOLDER, pdf_filename)  # 保存路径
-#         try:  
-#             convert(filepath, pdf_filepath)  
-#             return redirect('format_conversion') 
-#         except Exception as e:  
-#             flash(f'Error converting file: {e}')  
-#             return '<script> alert("转换失败");</script>' 
-#     else:  
-#         flash('Invalid file type. Only .docx files are allowed.')  
-#         return redirect('Information_Extraction')
 
 
 # 程序运行处
