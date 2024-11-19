@@ -1,11 +1,8 @@
 from pprint import pprint
 from paddlenlp import Taskflow
-import logging
-logging.getLogger().setLevel(logging.WARNING)
-## 信息抽取
+
 schema = ['选手成绩']
 ie = Taskflow('information_extraction', schema=schema, model='uie-base')
-ie_en = Taskflow('information_extraction', schema=schema, model='uie-base-en')
 results = ie("2月8日上午北京冬奥会自由式滑雪女子大跳台决赛中中国选手谷爱凌以188.25分获得金牌！")
 extracted_entities = []
 for entity_type, mentions in results[0].items():

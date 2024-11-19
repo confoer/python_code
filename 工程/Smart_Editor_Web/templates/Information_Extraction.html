@@ -11,12 +11,16 @@
 <body>
     <div class="upload-container">
         <h2>上传文件（.docx）</h2>
-        <form id = "upload_form" action="/Upload_data" method="post" enctype="multipart/form-data">
+        <form id = "upload_form" action="/Upload_data",method="post",enctype="multipart/form-data">
             <label for="file" class="file-label">选择文件:</label>
             <input type="file" id="file" name="file" class="file-input"><br><br>
             <input type="submit" value="上传文件" class="submit-button">
         </form>
     </div>
+    <form action="/Information_Extraction">
+        <input type="text" name="need_result" placeholder="请输入你想要查询的信息">
+        <input type="submit" value="查询" class="submit-button">
+    </form>
     <div class="button-container">
         <button class="action-button" id="Communication_Extract">信息提取</button>
         <button class="action-button" id="Relationship_Extraction">关系提取</button>

@@ -18,8 +18,8 @@ import os,sys
 app = Flask(__name__)
 app.secret_key = 'secret'  
 app.config['SECRET_KEY'] = 'secret'  
-UPLOAD_FOLDER = '../Smart_Editor_Web/uploads/'  
-DOWNLOAD_FOLDER = '../Smart_Editor_Web/downloads'  
+UPLOAD_FOLDER = 'uploads/'  
+DOWNLOAD_FOLDER = 'downloads/'  
 app.config['ALLOWED_EXTENSIONS'] = ['png','jpg', 'jpeg']
 
 ##检查是否存在文件夹
@@ -331,7 +331,6 @@ def wordcloud_docx():
 def download_wordcloud(filename):  
     return send_from_directory(DOWNLOAD_FOLDER, filename)
 
-
 ## 信息抽取
 @app.route('/Information_Extraction_ui',methods=['GET','POST'])
 def Information_Extraction_ui():
@@ -341,8 +340,9 @@ def Information_Extraction_ui():
 def Upload_data():
     if 'file' not in request.files:  
         flash('No file part')  
-        return '<script> alert("文件路径错误");</script>'   
-    file = request.files['file']  
+        return '<script> alert("文件路径错误");</script>'  
+    file = request.files['file']
+    need_result = request.files['need_result']  
     if file.filename == '':  
         flash('No selected file')  
         return '<script> alert("没有选择文件");</script>'   
@@ -350,9 +350,12 @@ def Upload_data():
         filename = file.filename # 获取文件名  
         filepath = os.path.join(UPLOAD_FOLDER, filename)  # 文件路径
         file.save(filepath)
+    return render_template('Information_Extraction.html')
 
 @app.route('/Information_Extraction',methods = ['POST'])
 def Information_Extraction():
+    schema = []
+    ie = Taskflow('information_extraction', schema=schema, model='uie-base')
     data = request.get_json()
     action = data.get('action')
     if action == 'Communication_Extract':
