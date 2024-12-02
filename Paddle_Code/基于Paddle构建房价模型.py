@@ -22,7 +22,7 @@
     6.测试训练模型并保存
 
 """
-" 版本:,Python==3.9,Paddle==2.4 "
+" 版本:Python==3.9,Paddle==2.4 "
 import paddle
 import paddle.fluid as fluid
 import paddle.fluid.dygraph as dygraph
