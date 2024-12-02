@@ -112,9 +112,9 @@ def main(yolo5_config):
     mycap.release()
     print(
         "\n=> process done {}/{} images, total cost: {:.2f}s [{:.2f} fps]".format(len(os.listdir(yolo5_config.output)),
-                                                                                  total_num, time.time() - c,
-                                                                                  len(os.listdir(
-                                                                                      yolo5_config.output)) / (
+                                             total_num, time.time() - c,
+                                     len(os.listdir(
+         yolo5_config.output)) / (
                                                                                               time.time() - c)))
 
     print("=> main task finished: {}".format(datetime.now().strftime('%H:%M:%S')))
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     # GPU（0表示设备的默认的显卡）或CPU
     parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     # 通过classes来过滤yolo要检测类别，0表示检测人，1表示自行车，更多具体类别数字可以在19行附近打印出来
-    parser.add_argument('--classes', default=0, type=int, help='filter by class: --class 0, or --class 0 1 2 3')
+    parser.add_argument('--classes', default=1, type=int, help='filter by class: --class 0, or --class 0 1 2 3')
 
     yolo5_config = parser.parse_args()
     print(yolo5_config)
