@@ -125,7 +125,7 @@ with dygraph.guard():
     model.load_dict(model_dict)
     model.eval()
     # 参数为数据集文件地址
-    test_data,label = load_one_example("D:\\Python\\datasets\\boston.data")
+    test_data,label = load_one_example("datasets\\boston.data")
     test_data = dygraph.to_variable(test_data)
     results = model(test_data)
     # 对结果做反归一化处理
