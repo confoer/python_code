@@ -5,7 +5,6 @@ from pdf2docx import Converter
 from docx2pdf import convert
 from werkzeug.utils import secure_filename
 from paddleocr import PaddleOCR,draw_ocr
-from pprint import pprint
 from paddlenlp import Taskflow
 import pandas as pd
 import traceback,pdfkit
@@ -47,7 +46,7 @@ def login():
 
 @app.route('/login',methods=['GET','POST'])
 def getLoginRequest():
-    db = pymysql.connect(host="localhost", user="root", password="1023456zxc", database="user_data", charset="utf8")
+    db = pymysql.connect(user="root",host="localhost",  password="1023456zxc", database="user_data", charset="utf8")
     cursor = db.cursor()
     username = request.args.get('User_Name')
     password = request.args.get('User_Password')
