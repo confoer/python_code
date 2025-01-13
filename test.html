@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,68 @@
 </head>
 <script>
     alert("你好")
-    var names = ['1','2','3']
+    var names = ['1', '2', '3']
     alert(names[0])//界面显示
+    names.push('4')//在末尾增加内容
+    names.unshift('0')//在开头增加内容
+    names.pop()//删除末尾内容
+    names.shift()//删除开头内容
     console.log(names[0]) //控制台打印
-    
+    var person = {
+        name: "张三",
+        age: "21",
+        sex: "男"
+    }
+    //获取对象的属性
+    console.log(person['name'])
+    console.log(person.name)
+
+
+    //流程控制语句
+    if (person.length > 0) {
+        if (person.name != null) {
+            console.log(person.name)
+        }
+        else {
+            console.log("无名氏")
+        }
+    } else { console.log("无人") }
+
+    while (person.length > 0) {
+        console.log(person.name)
+        person.length--
+    }
+    for (var i = 0; i < person.length; i++) {//for循环类似于c语言
+        console.log(person.name)
+    }
+    //定义函数
+    function gerrt(name) {
+        return `你好${name}`
+    }
+    console.log(gerrt(person.name))
+    imgArr = []
+
 </script>
 
 <body>
-    <button onclick="alert('逗你玩')">111</button> 
+    <div id="box">你好</div>
+    <div class="left">3</div>
+    <button onclick="alert('逗你玩')">111</button>
+    <img src="" alt="">
+    <script>
+        //DOM操作,需要在内容加载完成后执行
+        var div = document.getElementById("box")//通过id获取元素
+        // var div = document.getElementsByClassName("1")[0]//通过类名获取元素,class是一个数组,所以需要加上下标
+        var divs = document.querySelectorAll('div')
+        div.innerHTML = "张三"
+        div.style.color = "white"
+        div.style.backgroundColor = "black"
+
+        document.querySelector('.left').onclick = function () {//通过获取类名，设置点击事件
+            alert('逗你玩')
+            document.querySelector('img').src = imgArr[0]//改变图片的src
+        }
+    </script>
 </body>
+
 </html>
