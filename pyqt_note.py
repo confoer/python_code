@@ -48,13 +48,22 @@ class MyWindowV(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.resize(300,300)
+        self.resize(400,400)
         self.setWindowTitle("垂直布局")
 
-        layout = QVBoxLayout()
         btn1 = QPushButton("按钮1")
         btn2 = QPushButton("按钮2")
         btn3 = QPushButton("按钮3")
+
+        layout = QVBoxLayout()#设置垂直布局的布局器
+        layout.addStretch(2)
+        layout.addWidget(btn1)#将按钮加入布局器中
+        layout.addStretch(2)
+        layout.addWidget(btn2)
+        layout.addStretch(2)
+        layout.addWidget(btn3)
+        layout.addStretch(2)#添加一个伸缩器，设置间距
+        self.setLayout(layout)
 
 if __name__ =='__main__':
     app = QApplication(sys.argv)
