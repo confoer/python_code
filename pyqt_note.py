@@ -1,14 +1,16 @@
 import sys
+from PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QLabel,QLineEdit,QDesktopWidget,QVBoxLayout,QGroupBox,QMainWindow
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 
-from PyQt5.QtWidgets import QApplication,QWidget,QPushButton,QLabel,QLineEdit,QDesktopWidget
-
-if __name__ == '__main__':
+class test():
     app = QApplication(sys.argv)
     
     w = QWidget()
     
     w.setWindowTitle("第一个PyQt")#设置窗口标题
-    w.resize(1500,800)
+    w.resize(1200,600)
+
     # 创建按钮
     # btn = QPushButton("按钮")
     # btn.setParent(w)# 添加到窗口显示
@@ -26,15 +28,36 @@ if __name__ == '__main__':
     w.move(0,0)
     
     # 调整窗口在屏幕中央显示
-    center_pointer = QDesktopWidget().availableGeometry().center()
+    center_pointer = QDesktopWidget().availableGeometry().center()# 获取屏幕中央坐标
     x = center_pointer.x()
     y = center_pointer.y()
-    w.move(x,y)
-    print(w.frameGeometry())
+    # w.move(x-600,y-300)
+    # print(w.frameGeometry())
     print(w.frameGeometry().getRect())
     print(type(w.frameGeometry().getRect()))
     old_x,old_y,width,height = w.frameGeometry().getRect()
-    w.move(x - width/2,y - height/2)
+    w.move(x -  width//2,y - height//2)
+
+    # 设置图标
+    # w.setWindowIcon(QIcon("icon.png"))
 
     w.show()# 展示窗口 
-    app.exec_()#程序进行循环等待状态
+    app.exec()#程序进行循环等待状态
+
+class MyWindowV(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.resize(300,300)
+        self.setWindowTitle("垂直布局")
+
+        layout = QVBoxLayout()
+        btn1 = QPushButton("按钮1")
+        btn2 = QPushButton("按钮2")
+        btn3 = QPushButton("按钮3")
+
+if __name__ =='__main__':
+    app = QApplication(sys.argv)
+    w = MyWindowV()
+    w.show()
+    app.exec()

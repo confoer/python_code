@@ -72,7 +72,7 @@ def draw_message():
     turtle.color("dark red", "red")
     turtle.write("Merry Christmas", align="center", font=("Comic Sans MS", 40, "bold"))
     turtle.goto(-10, -280)
-    turtle.write("㊗️杨欣雨圣诞快乐，2023年12月25日", align="center", font=("Comic Sans MS", 20, "bold"))
+    turtle.write("㊗️杨欣雨圣诞快乐，2024年12月25日", align="center", font=("Comic Sans MS", 20, "bold"))
     turtle.goto(-10, -310)
     turtle.write("🧊🍦❄❄️❄️🎄🎄🎄🎅🎅🎅️", align="center", font=("Comic Sans MS", 20, "bold"))
 
