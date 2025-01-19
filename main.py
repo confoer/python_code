@@ -12,8 +12,8 @@ for i in range(10):#重复10次
 # print(piplinein)
 # print(piplineout)
 ################################
-myhand = 0#寄存器，我把它叫做手
-stock0 = 0#寄存器，也许会有用，也许不会
+myhand = 0
+stock0 = 0
 stock1 = 0
 stock2 = 0
 stock3 = 0
