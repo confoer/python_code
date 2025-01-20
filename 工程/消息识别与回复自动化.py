@@ -1,9 +1,9 @@
-import pyautogui as pg #自动化库
-import pyperclip as pc#复制粘贴库
-from cnocr import CnOcr #导入CnOcr(图像识别库)(光学字符识别)
-import time      #时间
-import json      #导入json库
-import random    #随机生成
+import pyautogui as pg
+import pyperclip as pc
+from cnocr import CnOcr 
+import time     
+import json      
+import random    
 
 # 关键字列表
 keyword_list = ['你好', '哈哈', '我喜欢你']

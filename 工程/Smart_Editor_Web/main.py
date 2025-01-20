@@ -263,7 +263,11 @@ def ai_answer_func():
     try:   
         response = erniebot.ChatCompletion.create(  
             model='ernie-lite',  
-            messages=[{'role': 'user', 'content': data}]  
+            messages=[{
+                        "role": "system",
+                        "content": "你是一位文档分析的职场老手，正在给朋友解决有关文档处理的问题。"
+                    },
+                    {'role': 'user', 'content': data}]  
         )          
         result = response.get_result() 
         message = f"{result}"  
