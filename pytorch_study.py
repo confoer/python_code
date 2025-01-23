@@ -1,7 +1,8 @@
-from torch.utils.data import dataset
+from torch.utils.data import Dataset
 import cv2
 import os
-class MyDataset(dataset):
+
+class MyDataset(Dataset):
     def __init__(self,root_dir,label_dir):# 初始化函数，得到图像路径和标签路径
         self.root_dir = root_dir
         self.label_dir = label_dir
@@ -18,5 +19,6 @@ class MyDataset(dataset):
     def __len__(self):
         return len(self.img_path)
 
-root_dir = 'dataset/train'# 图像根目录
+root_dir = 'datasets\pytorch_test\train'# 图像根目录
 ant_label_dir = "ants"
+ant_dataset = MyDataset(root_dir,ant_label_dir)
