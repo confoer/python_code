@@ -114,8 +114,7 @@ def main(yolo5_config):
         "\n=> process done {}/{} images, total cost: {:.2f}s [{:.2f} fps]".format(len(os.listdir(yolo5_config.output)),
                                              total_num, time.time() - c,
                                      len(os.listdir(
-         yolo5_config.output)) / (
-                                                                                              time.time() - c)))
+         yolo5_config.output)) / (time.time() - c)))
 
     print("=> main task finished: {}".format(datetime.now().strftime('%H:%M:%S')))
 
