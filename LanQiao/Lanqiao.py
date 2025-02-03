@@ -19,7 +19,12 @@
 # 倒序输出
 # print(n[::-1])
 
-t = int(input())
-arr = []
-for i in range(t):
-    arr+=[list(map(int,input().split()))]
+# 从1970年1月1日0时0分0秒开始的第n毫秒是几时几分几秒？
+from datetime import datetime, timedelta
+
+start = datetime(year=1970, month=1, day=1)# 1970年1月1日0时0分0秒
+dela = timedelta(milliseconds=1)# 1毫秒间隔
+now = int(input())
+
+now = start + now * dela# 计算时间
+print('%02d:%02d:%02d' % (now.hour, now.minute, now.second))
