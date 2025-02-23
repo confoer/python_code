@@ -28,3 +28,5 @@ now = int(input())
 
 now = start + now * dela# 计算时间
 print('%02d:%02d:%02d' % (now.hour, now.minute, now.second))
+for i in da:
+    da[i] = da.get(i, 0) + 1 # 实现了对字典的键值操作，如果 i 不存在于字典中，则默认值为 0，然后加 1。

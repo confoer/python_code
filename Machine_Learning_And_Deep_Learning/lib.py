@@ -96,6 +96,7 @@ def Logistic_Regression(X,y):
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X)
         X_train_pca = pca.transform(X_train)
+        X_test_pca = pca.transform(X_test)
         model.fit(X_train_pca, y_train)
 
         x_min, x_max = X_pca[:, 0].min() - 1, X_pca[:, 0].max() + 1
