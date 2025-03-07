@@ -124,17 +124,15 @@ if __name__ == "__main__":
     torch.multiprocessing.set_start_method('spawn')
     parser = argparse.ArgumentParser()
     # 视频的路径，默认是本项目中的一个测试视频test.mp4，可自行更改
-    parser.add_argument('--input', type=str, default="./test.mp4",
-                        help='test imgs folder or video or camera')  # 输入'0'表示调用电脑默认摄像头
+    parser.add_argument('--input', type=str, default='0',help='test imgs folder or video or camera')  # 输入'0'表示调用电脑默认摄像头
     # 处理后视频的输出路径
-    parser.add_argument('--output', type=str, default="./output",
-                        help='folder to save result imgs, can not use input folder')
-    parser.add_argument('--weights', type=str, default='weights/yolov5l.pt', help='model.pt path(s)')
+    parser.add_argument('--output', type=str, default="./output",help='folder to save result imgs, can not use input folder')
+    parser.add_argument('--weights', type=str, default='weights\yolov5l.pt', help='model.pt path(s)')
     parser.add_argument('--img_size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf_thres', type=float, default=0.4, help='object confidence threshold')
     parser.add_argument('--iou_thres', type=float, default=0.4, help='IOU threshold for NMS')
     # GPU（0表示设备的默认的显卡）或CPU
-    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     # 通过classes来过滤yolo要检测类别，0表示检测人，1表示自行车，更多具体类别数字可以在19行附近打印出来
     parser.add_argument('--classes', default=0, type=int, help='filter by class: --class 0, or --class 0 1 2 3')
 
