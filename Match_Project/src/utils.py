@@ -1,7 +1,7 @@
 import os
 import torch
 import numpy as np
-import config
+from config import config
 from PIL import Image
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms

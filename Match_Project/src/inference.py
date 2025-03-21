@@ -1,5 +1,3 @@
-from matplotlib import image
-from sympy import true
 import torch
 import os
 import cv2
@@ -77,11 +75,42 @@ def run_camera(predictor):
 
     cap.release()
     cv2.destroyAllWindows()
+    return text
 
+# def run_image_prediction(predictor, image_path, save_result=False, output_path=None, show_result=True):
+#     image = cv2.imread(image_path)
+#     if image is None:
+#         raise FileNotFoundError(f"无法读取图像文件: {image_path}")
+    
+#     predictions = predictor.predict(image)
+
+#     for pred in predictions:
+#         x, y, w, h = pred["bbox"]
+#         emotion = pred["emotion"]
+        
+#         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+#         text = f"{emotion}"
+#         cv2.putText(image, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+    
+#     annotated_image = image.copy()
+
+#     if save_result:
+#         if output_path is None:
+#             output_path = "annotated_image.jpg"
+#         cv2.imwrite(output_path, annotated_image)
+#         print(f"标注后的图像已保存到: {output_path}")
+    
+#     if show_result:
+#         cv2.namedWindow("Emotion Detection", cv2.WINDOW_NORMAL)
+#         cv2.imshow("Emotion Detection", annotated_image)
+#         cv2.waitKey(0)
+#         cv2.destroyAllWindows()
+
+#     return text
 def run_image_prediction(predictor, image_path, save_result=False, output_path=None, show_result=True):
     image = cv2.imread(image_path)
-    if image is None:
-        raise FileNotFoundError(f"无法读取图像文件: {image_path}")
+    # if image is None:
+    #     raise FileNotFoundError(f"无法读取图像文件: {image_path}")
     
     predictions = predictor.predict(image)
 
@@ -106,21 +135,20 @@ def run_image_prediction(predictor, image_path, save_result=False, output_path=N
         cv2.imshow("Emotion Detection", annotated_image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-    return predictions, annotated_image
-    
-if __name__ == "__main__":
-    
+
+    return text
+
+if __name__ == '__main__':
     if not os.path.exists("Match_Project\models\\best_model.pth"):
         raise FileNotFoundError("请先训练模型！")
     predictor = EmotionPredictor("Match_Project\models\\best_model.pth")
     
-    image_path = "img\\test.png"
+    image_path = "D:\Datasets\data\processed\\test\\angry\\20220230_000746.jpg"
     
-    predictions, annotated_image = run_image_prediction(
+    text = run_image_prediction(
         predictor, 
         image_path, 
-        save_result=True, 
+        save_result=False, 
         show_result=True
-    )
-    
-    
+    )    
+    print(text)
