@@ -1,10 +1,12 @@
+from email import message
 from turtle import pen
 from vosk import Model, KaldiRecognizer
 import json,os,cv2
 import pyaudio
 import pyttsx3
 import ollama
-import src.inference as inference
+import inference as inference
+import os,dashscope
 
 
 # 初始化
@@ -87,7 +89,40 @@ def mood():
     speak("按下空格键进行拍照")
     mood = inference.run_camera(predictor)
     return mood
-    
+
+def call_qianwen_api(text,mood):
+    messages = [{'role': 'user', 'content':f'你是康复保健领域的专家，我现在出现这种状况：{text}，而且，我的心情是{mood},尽量通俗易懂与简洁，'}]
+    response = dashscope.Generation.call(
+        api_key=os.getenv("DASHSCOPE_API_KEY"),
+        model="qwq-32b", 
+        messages=messages,
+        stream=True,
+    )
+    reasoning_content = ""
+    answer_content = ""
+    is_answering = False
+    for chunk in response:
+    # 如果思考过程与回复皆为空，则忽略
+        if(chunk.output.choices[0].message.content == "" and chunk.output.choices[0].message.reasoning_content == ""):
+            pass
+        else:
+            # 如果当前为思考过程
+            if (chunk.output.choices[0].message.reasoning_content != "" and 
+                chunk.output.choices[0].message.content == ""):
+                print(chunk.output.choices[0].message.reasoning_content, end="",flush=True)
+                reasoning_content += chunk.output.choices[0].message.reasoning_content
+            # 如果当前为回复
+            elif chunk.output.choices[0].message.content != "":
+                if not is_answering:
+                    print("\n" + "=" * 20 + "完整回复" + "=" * 20)
+                    is_answering = True
+                print(chunk.output.choices[0].message.content, end="",flush=True)
+                answer_content += chunk.output.choices[0].message.content
+    answer_content = answer_content.replace("**", "").replace("###","").replace("—", "").replace("(", "").replace(")", "").replace("[", "").replace("]", "")
+    answer_content = answer_content.replace("\n", "")
+    answer_content = " ".join(answer_content.split())  
+    return answer_content
+
 def call_ollama_api(text,mood):
     """调用 Ollama 本地大模型的 API，实现流式输出并统一格式"""
     print(f'提问：{text}')
@@ -128,7 +163,8 @@ def call_ollama_api(text,mood):
 
 if __name__ == "__main__":
     speak("你好！有什么可以帮助你的吗？")
-    text = listen()
+    # text = listen()
+    text = '头疼'
     while True:
         if "再见" in text:
             speak("再见！祝你有美好的一天！")
@@ -144,5 +180,5 @@ if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
     speak("按下q进行拍照")
     moods = inference.run_camera(predictor)
-    response = call_ollama_api(text,moods)
+    response = call_qianwen_api(text,moods)
     speak(response)
