@@ -70,7 +70,7 @@ def run_camera(predictor):
 
         cv2.imshow("Emotion Detection", frame)
         
-        if cv2.waitKey(1) & 0xFF == ord('q'):#按下q键退出
+        if cv2.waitKey(1) & 0xFF == ord(' '):
             break
 
     cap.release()
@@ -107,6 +107,57 @@ def run_camera(predictor):
 #         cv2.destroyAllWindows()
 
 #     return text
+def run_video_prediction(predictor, video_path, output_video_path=None, show_result=True):
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise FileNotFoundError("无法打开视频文件！")
+    
+    # 获取视频的帧率和尺寸
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    
+    # 创建视频写入对象
+    if output_video_path is not None:
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 视频编码格式
+        out = cv2.VideoWriter(output_video_path, fourcc, fps, frame_size)
+    
+    # 视频处理循环
+    while cap.isOpened():
+        # 读取视频帧
+        ret, frame = cap.read()
+        
+        if not ret:
+            break  # 视频结束
+        
+        # 进行情感预测
+        predictions = predictor.predict(frame)
+        
+        # 绘制预测结果
+        for pred in predictions:
+            x, y, w, h = pred["bbox"]
+            emotion = pred["emotion"]
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            text = f"{emotion}"
+            cv2.putText(frame, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+        
+        # 写入处理后的帧到输出视频
+        if output_video_path is not None:
+            out.write(frame)
+        
+        # 显示视频帧
+        if show_result:
+            cv2.imshow('Emotion Prediction', frame)
+        
+        # 按下 'q' 键退出
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    
+    # 释放资源
+    cap.release()
+    if output_video_path is not None:
+        out.release()
+    cv2.destroyAllWindows()
+
 def run_image_prediction(predictor, image_path, save_result=False, output_path=None, show_result=True):
     image = cv2.imread(image_path)
     # if image is None:
@@ -139,16 +190,13 @@ def run_image_prediction(predictor, image_path, save_result=False, output_path=N
     return text
 
 if __name__ == '__main__':
-    if not os.path.exists("Match_Project\models\\best_model.pth"):
+    model_path = "D:\Python_Code\Match_Project\models\\best_model.pth"
+    if not os.path.exists(model_path):
         raise FileNotFoundError("请先训练模型！")
-    predictor = EmotionPredictor("Match_Project\models\\best_model.pth")
+    predictor = EmotionPredictor(model_path)
     
-    image_path = "D:\Datasets\data\processed\\test\\angry\\20220230_000746.jpg"
+    video_path = "D:\\test.mp4"  # 输入视频路径
+    output_video_path = "D:\\output_test.mp4"  # 输出视频路径
     
-    text = run_image_prediction(
-        predictor, 
-        image_path, 
-        save_result=False, 
-        show_result=True
-    )    
-    print(text)
+    run_video_prediction(predictor, video_path, output_video_path, show_result=True)
+    

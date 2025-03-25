@@ -6,9 +6,9 @@ class Config:
     # 训练参数
     batch_size = 28
     lr = 0.001
-    epochs = 50
-    num_workers = 4
-    step_size = 10
+    epochs = 20
+    num_workers = 8
+    step_size = 4
     gamma = 0.1
     
     # 模型参数

@@ -55,7 +55,7 @@ def get_transforms():
 def prepare_dataloaders():
     train_transform, val_transform = get_transforms()
     
-    full_dataset = EmotionDataset(os.path.join(config.config.data_root, "train"), transform=train_transform)
+    full_dataset = EmotionDataset(os.path.join(config.data_root, "train"), transform=train_transform)
     train_size = int(0.8 * len(full_dataset))
     val_size = len(full_dataset) - train_size
     train_dataset, val_dataset = torch.utils.data.random_split(full_dataset, [train_size, val_size])
@@ -63,15 +63,15 @@ def prepare_dataloaders():
     # 修正验证集的transform
     val_dataset.dataset.transform = val_transform
     
-    test_dataset = EmotionDataset(os.path.join(config.config.data_root, "test"), transform=val_transform)
+    test_dataset = EmotionDataset(os.path.join(config.data_root, "test"), transform=val_transform)
     
     dataloaders = {
-        "train": DataLoader(train_dataset, batch_size=config.config.batch_size, 
-                          shuffle=True, num_workers=config.config.num_workers),
-        "val": DataLoader(val_dataset, batch_size=config.config.batch_size,
-                        shuffle=False, num_workers=config.config.num_workers),
-        "test": DataLoader(test_dataset, batch_size=config.config.batch_size,
-                         shuffle=False, num_workers=config.config.num_workers)
+        "train": DataLoader(train_dataset, batch_size=config.batch_size, 
+                          shuffle=True, num_workers=config.num_workers),
+        "val": DataLoader(val_dataset, batch_size=config.batch_size,
+                        shuffle=False, num_workers=config.num_workers),
+        "test": DataLoader(test_dataset, batch_size=config.batch_size,
+                         shuffle=False, num_workers=config.num_workers)
     }
     
     return dataloaders

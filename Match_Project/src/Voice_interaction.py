@@ -7,7 +7,7 @@ import pyttsx3
 import ollama
 import inference as inference
 import os,dashscope
-
+import keyboard
 
 # 初始化
 engine = pyttsx3.init()
@@ -61,31 +61,29 @@ def listen():
 
     return str(final_result)
 
-# def interact_with_ollama_model():
-#     """使用 Ollama 本地大模型进行语音交互"""
-#     speak("你好！有什么可以帮助你的吗？")
-#     text = listen()
-#     while True:
-#         if keyboard.is_pressed('q'):
-#             speak("再见！祝你有美好的一天！")
-#             break
-#         if "再见" in text:
-#             speak("再见！祝你有美好的一天！")
-#             break
-#         if not text:
-#             continue
-#         else:
-#             break
-#         # 调用 Ollama 本地大模型的 API 进行对话
-#     response = call_ollama_api(text)
-#     speak(response)
+def interact_with_ollama_model():
+    """使用 Ollama 本地大模型进行语音交互"""
+    speak("你好！有什么可以帮助你的吗？")
+    text = listen()
+    while True:
+        if keyboard.is_pressed('q'):
+            speak("再见！祝你有美好的一天！")
+            break
+        if "再见" in text:
+            speak("再见！祝你有美好的一天！")
+            break
+        if not text:
+            continue
+        else:
+            break
+        # 调用 Ollama 本地大模型的 API 进行对话
+    response = call_ollama_api(text)
+    speak(response)
 
 def mood():
-    if not os.path.exists("Match_Project\models\\best_model.pth"):
+    if not os.path.exists("./models\\est_model.pth"):
         raise FileNotFoundError("请先训练模型！")
-    predictor = inference.EmotionPredictor("Match_Project\models\\best_model.pth")
-    
-    cap = cv2.VideoCapture(0)
+    predictor = inference.EmotionPredictor("./models\\best_model.pth")
     speak("按下空格键进行拍照")
     mood = inference.run_camera(predictor)
     return mood
@@ -128,7 +126,7 @@ def call_ollama_api(text,mood):
     print(f'提问：{text}')
     stream = ollama.generate(
         stream=False,
-        model='deepseek-r1:8b',  # 指定模型名称
+        model='deepseek-r1:8b',
         prompt=f'你是医疗保健领域的专家，我现在出现这种状况：{text}，而且，我的心情是{mood},请给我简单讲一讲，尽量通俗易懂与简洁，字数缩短到100字以内。'
     )
     print('-----------------------------------------')
@@ -163,8 +161,8 @@ def call_ollama_api(text,mood):
 
 if __name__ == "__main__":
     speak("你好！有什么可以帮助你的吗？")
-    # text = listen()
-    text = '头疼'
+    text = listen()
+    #text = '头疼'
     while True:
         if "再见" in text:
             speak("再见！祝你有美好的一天！")
@@ -174,11 +172,11 @@ if __name__ == "__main__":
         else:
             break
         # 调用 Ollama 本地大模型的 API 进行对话
-    if not os.path.exists("Match_Project\models\\best_model.pth"):
+    if not os.path.exists("D:\Python_Code\Match_Project\models\\best_model.pth"):
         raise FileNotFoundError("请先训练模型！")
-    predictor = inference.EmotionPredictor("Match_Project\models\\best_model.pth")
-    cap = cv2.VideoCapture(0)
-    speak("按下q进行拍照")
+    predictor = inference.EmotionPredictor("D:\Python_Code\Match_Project\models\\best_model.pth")
+    #speak("按下空格键进行拍照")
     moods = inference.run_camera(predictor)
+    #moods = "难过"
     response = call_qianwen_api(text,moods)
     speak(response)

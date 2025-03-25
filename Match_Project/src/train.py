@@ -23,6 +23,9 @@ def train():
     best_acc = 0.0
     train_losses, val_losses = [], []
     train_accs, val_accs = [], []
+
+    patience = 10
+    counter = 0
     
     for epoch in range(config.epochs):
         print(f"\nEpoch {epoch+1}/{config.epochs}")
@@ -74,6 +77,14 @@ def train():
                     best_acc = epoch_acc
                     torch.save(model.state_dict(), 
                               f"{config.checkpoint_dir}/best_model.pth")
+                    counter = 0
+                else:
+                    counter += 1
+                    if counter >= patience:
+                        print("Early stopping")
+                        break
+        if counter >= patience:
+            break            
                     
     # 保存训练曲线
     plt.figure(figsize=(12, 5))
