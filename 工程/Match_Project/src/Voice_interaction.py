@@ -209,13 +209,11 @@ if __name__ == "__main__":
             continue
         else:
             break
-        # 调用 Ollama 本地大模型的 API 进行对话
     if not os.path.exists("D:\Python_Code\Match_Project\models\\best_model.pth"):
         raise FileNotFoundError("请先训练模型！")
     predictor = inference.EmotionPredictor("D:\Python_Code\Match_Project\models\\best_model.pth")
-    #speak("按下空格键进行拍照")
-    #moods = inference.run_camera(predictor)
-    moods = "难过"
+    speak("按下空格键进行拍照")
+    moods = inference.run_camera(predictor)
     response = call_qianwen_api(text,moods)
     
     print(response)
